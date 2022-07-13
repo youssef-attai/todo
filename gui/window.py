@@ -34,20 +34,21 @@ class Window(QWidget):
         ))
 
         self.new_task_line_edit.setFocus()
+        self.update_tasklist()
 
     def create_new_task(self, task_title: str) -> None:
         self.todo_app.create_new_task(task_title)
         self.update_tasklist()
 
-    def delete_task(self, task_id: int) -> None:
+    def delete_task(self, task_id: float) -> None:
         self.todo_app.delete_task(task_id)
         self.update_tasklist()
 
-    def toggle_task(self, task_id: int) -> None:
+    def toggle_task(self, task_id: float) -> None:
         self.todo_app.toggle_task(task_id)
         self.update_tasklist()
 
-    def rename_task(self, task_id: int, new_title: str) -> None:
+    def rename_task(self, task_id: float, new_title: str) -> None:
         self.todo_app.rename_task(task_id, new_title)
         self.update_tasklist()
 
