@@ -8,6 +8,7 @@ from gui.task_frame import TaskFrame
 class Window(QWidget):
     def __init__(self, todo_app: ToDoApp) -> None:
         super().__init__()
+        self.setMinimumWidth(400)
         self.todo_app = todo_app
 
         self.setLayout(QVBoxLayout(self))
@@ -44,6 +45,10 @@ class Window(QWidget):
 
     def toggle_task(self, task_id: int) -> None:
         self.todo_app.toggle_task(task_id)
+        self.update_tasklist()
+
+    def rename_task(self, task_id: int, new_title: str) -> None:
+        self.todo_app.rename_task(task_id, new_title)
         self.update_tasklist()
 
     def update_tasklist(self) -> None:

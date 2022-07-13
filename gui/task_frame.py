@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFrame, QHBoxLayout, QLabel, QCheckBox, QPushButton
 
 from components.todo_task import ToDoTask
+from gui.rename_dialog import RenameDialog
 
 
 class TaskFrame(QFrame):
@@ -38,3 +39,12 @@ class TaskFrame(QFrame):
         self.done_checkbox.toggled.connect(
             lambda: self.window.toggle_task(self.task.get_task_id())
         )
+
+        self.rename_button.pressed.connect(
+            self.rename_dialog
+        )
+
+    def rename_dialog(self):
+        dialog = RenameDialog(self)
+        if dialog.exec():
+            self.window.rename_task(self.task.get_task_id(), dialog.rename_line_edit.text())

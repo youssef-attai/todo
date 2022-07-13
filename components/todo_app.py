@@ -24,8 +24,8 @@ class ToDoApp:
     def rename_task(self, task_id: int, new_name: str) -> None:
         for task in self.__tasks:
             if task.get_task_id() == task_id:
-                task.set_title(new_name)
                 print(f"RENAME TASK {task_id} FROM {task.get_title()} TO {new_name}")
+                task.set_title(new_name)
                 break
 
     def delete_task(self, task_id: int) -> None:
