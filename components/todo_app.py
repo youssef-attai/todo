@@ -40,3 +40,10 @@ class ToDoApp:
 
     def get_tasks(self) -> list[ToDoTask]:
         return self.__tasks
+
+    def set_task_reminder(self, task_id: float, reminder: float):
+        for task in self.__tasks:
+            if task.get_task_id() == task_id:
+                task.set_reminder(reminder)
+                break
+        StorageClient.save_tasks(self.__tasks)

@@ -52,6 +52,10 @@ class Window(QWidget):
         self.todo_app.rename_task(task_id, new_title)
         self.update_tasklist()
 
+    def set_task_reminder(self, task_id: float, reminder: float) -> None:
+        self.todo_app.set_task_reminder(task_id, reminder)
+        self.update_tasklist()
+
     def update_tasklist(self) -> None:
         for i in reversed(range(self.tasks_widget.layout().count())):
             self.tasks_widget.layout().itemAt(i).widget().setParent(None)
