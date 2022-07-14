@@ -1,5 +1,7 @@
 import datetime
 
+from PyQt5.QtGui import QIcon
+
 from components.storage_client import StorageClient
 from components.todo_task import ToDoTask
 
@@ -8,6 +10,7 @@ class ToDoApp:
     __tasks: list[ToDoTask]
 
     def __init__(self) -> None:
+        self.icon = QIcon("images/todo-icon.png")
         self.__tasks = list()
 
         self.load_existing(StorageClient.load_tasks())
