@@ -1,5 +1,6 @@
 import datetime
 
+from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QIcon
 
 from components.storage_client import StorageClient
@@ -10,9 +11,11 @@ class ToDoApp:
     __tasks: list[ToDoTask]
 
     def __init__(self) -> None:
+        self.window = None
+        self.tray = None
         self.icon = QIcon("images/todo-icon.png")
         self.__tasks = list()
-
+        self.__reminders = list()
         self.load_existing(StorageClient.load_tasks())
 
     def load_existing(self, tasks: list[ToDoTask]) -> None:
@@ -47,6 +50,21 @@ class ToDoApp:
     def set_task_reminder(self, task_id: float, reminder: float):
         for task in self.__tasks:
             if task.get_task_id() == task_id:
+                duration = int(round(reminder * 1000)) - int(round(datetime.datetime.now().timestamp() * 1000))
                 task.set_reminder(reminder)
+                timer = QTimer()
+                timer.timeout.connect(
+                    lambda: (self.tray.showMessage(task.get_title(), task.get_title(), self.icon),
+                             task.set_reminder(None),
+                             self.window.update_tasklist()))
+                timer.setSingleShot(True)
+                timer.start(duration)
+                self.__reminders.append(timer)
                 break
         StorageClient.save_tasks(self.__tasks)
+
+    def set_tray(self, tray):
+        self.tray = tray
+
+    def set_window(self, window):
+        self.window = window

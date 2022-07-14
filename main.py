@@ -1,5 +1,6 @@
 import sys
 
+from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction
 
 from components.todo_app import ToDoApp
@@ -11,8 +12,11 @@ def main():
     q_app.setApplicationName("ToDo")
     todo_app = ToDoApp()
     q_app.setWindowIcon(todo_app.icon)
-    window = Window(todo_app)
     tray = QSystemTrayIcon(todo_app.icon, q_app)
+    todo_app.set_tray(tray)
+    window = Window(todo_app)
+    todo_app.set_window(window)
+
     if tray.isSystemTrayAvailable():
         q_app.setQuitOnLastWindowClosed(False)
         tray.setToolTip(q_app.applicationName())
