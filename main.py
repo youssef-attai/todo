@@ -1,5 +1,9 @@
+
+from task_model import TaskModel
+
+
 def main():
-    pass
+    task_model = TaskModel()
 
 
 if __name__ == '__main__':
