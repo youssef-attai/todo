@@ -4,6 +4,13 @@ import sqlite3
 
 
 class TaskModel:
+    class Task:
+        def __init__(self, task_tuple):
+            self.tid = task_tuple[0]
+            self.title = task_tuple[1]
+            self.due = task_tuple[2]
+            self.done = task_tuple[3]
+
     @staticmethod
     def db_path():
         return os.path.join(TaskModel.get_appdata_dir(), 'todo.db')
@@ -43,21 +50,23 @@ class TaskModel:
         self.connection.commit()
 
     def new_task(self, title, due, reminders_dues):
-        new_task_id = self.cursor.execute('''INSERT INTO Tasks (Title, Due, Done)
+        task = TaskModel.Task(self.cursor.execute('''INSERT INTO Tasks (Title, Due, Done)
 VALUES (:title, :due, 0)
-RETURNING TaskID;''', {
+RETURNING *;''', {
             'title': title,
             'due': due
-        }).fetchone()[0]
+        }).fetchone())
         self.connection.commit()
 
         for reminder_due in reminders_dues:
             self.cursor.execute('''INSERT INTO Reminders (TaskID, Due)
 VALUES (:tid, :due);''', {
-                'tid': new_task_id,
+                'tid': task.tid,
                 'due': reminder_due
             })
             self.connection.commit()
+
+        return task
 
     def remove_task(self, tid):
         self.cursor.execute('''DELETE
@@ -99,3 +108,14 @@ WHERE TaskID == :tid;''', {
                 'due': reminder_due
             })
             self.connection.commit()
+
+    def get_all_tasks(self):
+        return list(map(TaskModel.Task, self.cursor.execute('''SELECT * FROM Tasks;''').fetchall()))
+
+    def toggle_task_done(self, tid):
+        self.cursor.execute('''UPDATE Tasks
+SET Done=(NOT Done)
+WHERE TaskID == :tid;''', {
+            'tid': tid
+        })
+        self.connection.commit()

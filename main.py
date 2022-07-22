@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QApplication
 
+from task_controller import TaskController
 from task_model import TaskModel
 from views.task_view import TaskView
 

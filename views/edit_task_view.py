@@ -1,6 +1,6 @@
 from PySide6.QtGui import QPainter, Qt
 from PySide6.QtWidgets import (QWidget, QStyleOption, QStyle, QVBoxLayout, QLineEdit, QDateTimeEdit, QScrollArea,
-                               QPushButton, QHBoxLayout)
+                               QPushButton, QHBoxLayout, QFrame)
 
 
 class EditTaskView(QWidget):
@@ -42,10 +42,19 @@ class EditTaskView(QWidget):
         self.reminders_scrollarea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.reminders_scrollarea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
+        self.buttonbox_frame = QFrame(self)
+        self.cancel_button = QPushButton('Cancel', self)
+        self.ok_button = QPushButton('Ok', self)
+
+        self.buttonbox_frame.setLayout(QHBoxLayout(self.buttonbox_frame))
+        self.buttonbox_frame.layout().addWidget(self.cancel_button)
+        self.buttonbox_frame.layout().addWidget(self.ok_button)
+
         self.layout().addWidget(self.title_lineedit)
         self.layout().addWidget(self.due_datetimeedit)
         self.layout().addWidget(self.reminders_scrollarea)
         self.layout().addWidget(self.new_reminder_button)
+        self.layout().addWidget(self.buttonbox_frame)
 
     def paintEvent(self, event):
         opt = QStyleOption()
