@@ -11,6 +11,11 @@ class TaskModel:
             self.due = task_tuple[2]
             self.done = task_tuple[3]
 
+    class Reminder:
+        def __init__(self, task_tuple):
+            self.tid = task_tuple[0]
+            self.due = task_tuple[1]
+
     @staticmethod
     def db_path():
         return os.path.join(TaskModel.get_appdata_dir(), 'todo.db')
@@ -112,10 +117,30 @@ WHERE TaskID == :tid;''', {
     def get_all_tasks(self):
         return list(map(TaskModel.Task, self.cursor.execute('''SELECT * FROM Tasks;''').fetchall()))
 
+    def get_all_reminders(self):
+        return list(map(TaskModel.Reminder, self.cursor.execute('''SELECT * FROM Reminders;''').fetchall()))
+
     def toggle_task_done(self, tid):
         self.cursor.execute('''UPDATE Tasks
 SET Done=(NOT Done)
 WHERE TaskID == :tid;''', {
             'tid': tid
+        })
+        self.connection.commit()
+
+    def get_task(self, tid):
+        return TaskModel.Task(self.cursor.execute('''SELECT *
+FROM Tasks
+WHERE TaskID == :tid;''', {
+            'tid': tid
+        }).fetchone())
+
+    def remove_reminder(self, reminder):
+        self.cursor.execute('''DELETE
+FROM Reminders
+WHERE (TaskID == :tid
+    AND Due == :due);''', {
+            'tid': reminder.tid,
+            'due': reminder.due
         })
         self.connection.commit()

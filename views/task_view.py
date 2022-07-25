@@ -22,3 +22,6 @@ class TaskView(QWidget):
         opt.initFrom(self)
         p = QPainter(self)
         self.style().drawPrimitive(QStyle.PrimitiveElement.PE_Widget, opt, p, self)
+
+    def display_error(self, error_msg):
+        print(error_msg)
