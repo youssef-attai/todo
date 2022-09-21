@@ -17,7 +17,7 @@ Open a terminal window, and run the following commands:
 6. `python main.py`
 
 ## Notes
-- When you run the app, it will check for an existing sqlite database to load previously added to-dos. It no such database is found, it is created in your **persistent application data** directory:
+- When you run the app, it will check for an existing sqlite database, to load previously added to-dos. If no such database is found, it is created in your **persistent application data** directory:
   - On Windows: `C:\Users\<USER>\AppData\Local\todo`
   - On Linux:   `~/.local/share/todo`
   - on MacOS:   `~/Library/Application Support/todo`
