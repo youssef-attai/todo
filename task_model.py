@@ -33,6 +33,8 @@ class TaskModel:
         return os.path.join(p, "todo")
 
     def __init__(self):
+        if not os.path.exists(TaskModel.get_appdata_dir()):
+            os.makedirs(TaskModel.get_appdata_dir())
         self.connection = sqlite3.connect(self.db_path())
         self.cursor = self.connection.cursor()
 
