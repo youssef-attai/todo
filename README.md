@@ -1,6 +1,6 @@
-# To-do list app
+# To-do app
 
-Basic to-do list app for desktop. Tested on both Windows and Linux, not tested on MacOS but should work fine.
+Basic to-do app for desktop. Tested on both Windows and Linux. *Not* tested on MacOS, but should work fine.
 
 ## How to run on your machine
 
