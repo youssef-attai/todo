@@ -21,3 +21,4 @@ Open a terminal window, and run the following commands:
   - On Windows: `C:\Users\<USER>\AppData\Local\todo`
   - On Linux:   `~/.local/share/todo`
   - on MacOS:   `~/Library/Application Support/todo`
+- Reminders should fire some kind of alarm, for now they just log the task details when the due datetime comes.
