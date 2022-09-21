@@ -13,4 +13,5 @@ Open a terminal window, and run the following commands:
 2. `cd todo`
 3. Make sure you have `virtualenv` installed, then run `virtualenv venv`
 4. `source venv/bin/activate`
-5. `python main.py`
+5. `pip install -r requirements.txt`
+6. `python main.py`
